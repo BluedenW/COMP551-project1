@@ -42,7 +42,7 @@ testing=data[11000:12000] # the list contains elements from position 11000 to po
 # Example:
 
 
-def tranform(partition):
+def transform(partition):
 
 	partlen=len(partition)
 	hugelist=['']*250000
@@ -166,13 +166,27 @@ def tranform(partition):
 	#print(X.shape)
 	return X,Y
 
-Xm,Ym = tranform(testing) #input training/validation/testing
+Xm0,Ym0 = transform(training)#input training/validation/testing
+Xm1,Ym1 = transform(validation)
+Xm2,Ym2 = transform(testing) 
 
-print (Xm.shape)
-print (Ym.shape)
+print (Xm0.shape)
+print (Ym0.shape)
 
-print Xm
-print Ym
+print Xm0
+print Ym0
+
+print (Xm1.shape)
+print (Ym1.shape)
+
+print Xm1
+print Ym1
+
+print (Xm2.shape)
+print (Ym2.shape)
+
+print Xm2
+print Ym2
 
 
 
