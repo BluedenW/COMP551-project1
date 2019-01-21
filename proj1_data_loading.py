@@ -36,21 +36,35 @@ testing=data[11000:12000] # the list contains elements from position 11000 to po
 
 #print(testing[999])
 #print(training)
+#print(validation)
+#print(testing)
 #print("\n")
 # Example:
 
 
 def tranform(partition):
 
+	partlen=len(partition)
 	hugelist=['']*250000
 	j =0
 	children=[0]*10000
+	controversiality=[0]*10000
+	is_root=[0]*10000
+	popularity_score=[0]*partlen
 
 
-	for pos in range(len(partition)): #e.x. for x in range(6): 0 1 2 3 4 5
+
+
+	for pos in range(partlen): #e.x. for x in range(6): 0 1 2 3 4 5
+
 
 		data_point = partition[pos] # select the first data point in the dataset
-		#print(data_point) 
+		
+		children[pos]=data_point['children']
+		controversiality[pos]=data_point['controversiality']
+		is_root[pos]=int(data_point['is_root'])
+
+		popularity_score[pos]=data_point['popularity_score']
 		#print(data_point["text"])
 		#print(data_point["text"].lower())
 		# Now we print all the information about this datapoint
@@ -62,10 +76,6 @@ def tranform(partition):
 		#withoutpunc=lowerx.translate(None, string.punctuation)
 
 		data_point["text"]=lowerx.split()
-		
-		
-		
-
 		#print(data_point)
 		#for info_name, info_value in data_point.items():
 		#    print(info_name + " : " + str(info_value))
@@ -73,7 +83,6 @@ def tranform(partition):
 
 		#print(len(data_point["text"]))
 		slen= len(data_point["text"])
-
 
 		
 		#s = "string. With. Punctuation?"
@@ -86,7 +95,7 @@ def tranform(partition):
 		    
 		    #data_point["text"][i]=data_point["text"][i].translate(None, string.punctuation)
 
-		    #data_point["text"][i] = re.sub(r'[^\w\s]','',data_point["text"][i]) # removing the punctuation
+		    data_point["text"][i] = re.sub(r'[^\w\s]','',data_point["text"][i]) # removing the punctuation
 		    #print(data_point["text"][i])
 
 		    hugelist[i+j]=data_point["text"][i]
@@ -97,6 +106,8 @@ def tranform(partition):
 	#print(training[9999])
 	hugelist = filter(None, hugelist) # decrease the list size by removing empty spot
 	#print(hugelist)
+
+	#print("is_root", is_root)
 
 
 	#print(filt_list)
@@ -113,8 +124,8 @@ def tranform(partition):
 	#xcounts=[[0]*160]*10000
 	#print(most)
 
-	n = 10000
-	m = 163
+	n = len(partition)
+	m = 164
 	xcounts = [0] * n
 	for i in range(n):
 	    xcounts[i] = [0] * m
@@ -124,7 +135,7 @@ def tranform(partition):
 
 	countfre = 0
 
-	for pos in range(len(partition)): #e.x. for x in range(6): 0 1 2 3 4 5
+	for pos in range(partlen): #e.x. for x in range(6): 0 1 2 3 4 5
 
 		data_point = partition[pos]
 		#print(data_point)
@@ -139,15 +150,29 @@ def tranform(partition):
 			#	print(countfre)		
 			xcounts[pos][i]=countfre
 			countfre=0
+
+		xcounts[pos][160] = children[pos]
+		xcounts[pos][161] = controversiality[pos]
+		xcounts[pos][162] = is_root[pos]
+		xcounts[pos][163] = 1  #bias term
+
 	#print(xcounts)
 		#print(xcounts)
 			#countfre=0
 
 	X = np.asarray(xcounts)
-	print(X.shape)
-	return;
+	Y = np.asarray(popularity_score)
 
-tranform(training)
+	#print(X.shape)
+	return X,Y
+
+Xm,Ym = tranform(testing) #input training/validation/testing
+
+print (Xm.shape)
+print (Ym.shape)
+
+print Xm
+print Ym
 
 
 
