@@ -166,27 +166,27 @@ def transform(partition):
 	#print(X.shape)
 	return X,Y
 
-Xm0,Ym0 = transform(training)#input training/validation/testing
-Xm1,Ym1 = transform(validation)
-Xm2,Ym2 = transform(testing) 
+X_train,y_train = transform(training)#input training/validation/testing
+X_val,y_val = transform(validation)
+X_test,y_test = transform(testing)
 
-print (Xm0.shape)
-print (Ym0.shape)
+#print (X_train.shape)
+#print (y_train.shape)
 
-print Xm0
-print Ym0
+#print (X_train)
+#print (y_train)
 
-print (Xm1.shape)
-print (Ym1.shape)
+#print (X_val.shape)
+#print (y_val.shape)
 
-print Xm1
-print Ym1
+#print (X_val)
+#print (y_val)
 
-print (Xm2.shape)
-print (Ym2.shape)
+#print (X_test.shape)
+#print (y_test.shape)
 
-print Xm2
-print Ym2
+#print (X_test)
+#print (y_test)
 
 
 
