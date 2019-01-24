@@ -48,6 +48,7 @@ def transform(partition):
 	hugelist=['']*250000
 	j =0
 	children=[0]*10000
+	childrensquare=[0]*10000
 	controversiality=[0]*10000
 	is_root=[0]*10000
 	popularity_score=[0]*partlen
@@ -61,6 +62,7 @@ def transform(partition):
 		data_point = partition[pos] # select the first data point in the dataset
 		
 		children[pos]=data_point['children']
+		childrensquare[pos]=data_point['children']*data_point['children']
 		controversiality[pos]=data_point['controversiality']
 		is_root[pos]=int(data_point['is_root'])
 
@@ -125,7 +127,7 @@ def transform(partition):
 	#print(most)
 
 	n = len(partition)
-	m = 164
+	m = 165
 	xcounts = [0] * n
 	for i in range(n):
 	    xcounts[i] = [0] * m
@@ -155,6 +157,7 @@ def transform(partition):
 		xcounts[pos][161] = controversiality[pos]
 		xcounts[pos][162] = is_root[pos]
 		xcounts[pos][163] = 1  #bias term
+		xcounts[pos][164] = childrensquare[pos]
 
 	#print(xcounts)
 		#print(xcounts)
@@ -187,8 +190,6 @@ X_test,y_test = transform(testing)
 
 #print (X_test)
 #print (y_test)
-
-
 
 
 
