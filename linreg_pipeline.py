@@ -35,9 +35,9 @@ plt.show()
 plt.clf()
 
 # Implementing linear regression using gradient descent:
-eta_0 = 0.000005
+eta_0 = 0.000002
 beta = 0.00001
-eps = 0.0004
+eps = 0.00008
 w_gd = gd_lin_reg(X_train, y_train, eta_0, beta, eps)
 MSE_gd_train = compute_mse(X_train, w_gd, y_train)
 print("Gradient Descent: \r", w_gd)
