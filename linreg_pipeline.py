@@ -18,31 +18,50 @@ testing = data[11000:12000] # the list contains elements from position 11000 to 
 X_train,y_train = transform(training)
 X_val,y_val = transform(validation)
 X_test,y_test = transform(testing)
+X_train = X_train.astype('int64')
+X_val = X_val.astype('int64')
+X_test = X_test.astype('int64')
+y_train = y_train.reshape(10000,1)
+y_val = y_val.reshape(1000,1)
+y_test = y_test.reshape(1000,1)
 
 # Implementing linear regression using closed-form solution:
 w_cf = cf_lin_reg(X_train, y_train)
-y_predict = X_train @ w_cf
+y_predict = X_train @ w_cf # y_predict is [10000*1], X_train is [10000*165], w_cf is [165*1]
 
 # Calulating mean squared error
 MSE_cf_train = compute_mse(X_train, w_cf, y_train)
 print("MSE: \r", MSE_cf_train)
 
 # Plotting training targets vs predicted values
-plt.plot(y_train, y_predict, 'bo', markersize=2)
-plt.xlabel = 'y_train'
-plt.ylabel = 'y_predict'
-plt.show()
-plt.clf()
+#plt.plot(y_train, y_predict, 'bo', markersize=0.5)
+#plt.xlabel = 'y_train'
+#plt.ylabel = 'y_predict'
+#plt.xlim(-7.5, 10)
+#plt.ylim(-2.5, 10)
+#plt.gca().set_aspect('equal', adjustable='box')
+#plt.show()
+#plt.clf()
 
 # Implementing linear regression using gradient descent:
-eta_0 = 0.000002
-beta = 0.00001
-eps = 0.00008
+eta_0 = 0.000006
+beta = 0
+eps = 0.0001
+#print("eta_0:", eta_0)
 w_gd = gd_lin_reg(X_train, y_train, eta_0, beta, eps)
 MSE_gd_train = compute_mse(X_train, w_gd, y_train)
-print("Gradient Descent: \r", w_gd)
+#print("Gradient Descent: \r", w_gd)
+print("MSE: ", MSE_gd_train)
 
-
+#y_predict2 = X_train @ w_gd
+#plt.plot(y_train, y_predict2, 'bo', markersize=0.5)
+#plt.xlabel ('y_train')
+#plt.ylabel ('y_predict2')
+#plt.xlim(-7.5, 10)
+#plt.ylim(-2.5, 10)
+#plt.gca().set_aspect('equal', adjustable='box')
+#plt.show()
+#plt.clf()
 
 
 
